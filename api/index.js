@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import express from "express";
-
+import userRouter from "./routes/user.route.js";
 const app = express();
 
 (async () => {
@@ -20,3 +20,5 @@ const app = express();
     throw error;
   }
 })();
+
+app.use("/api/user", userRouter);
