@@ -2,7 +2,7 @@ import React from 'react';
 
 function Signin() {
   return (
-    <div>Signin</div>
+    <h1>Signin</h1>
   )
 }
 
