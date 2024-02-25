@@ -212,7 +212,7 @@ export default function Profile() {
           disabled={loading}
           className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80"
         >
-          {loading ? "Loading..." : "Update"}
+          {loading ? 'Loading...' : "Update"}
         </button>
         <Link
           className="bg-green-700 p-3 text-white uppercase text-center hover:opacity-95 rounded-lg"
