@@ -12,9 +12,9 @@ import {
  updateUserStart,
  updateUserSuccess,
  updateUserFailure,
-  // deleteUserStart,
-  // deleteUserSuccess,
-  // deleteUserFailure,
+ deleteUserStart,
+ deleteUserSuccess,
+ deleteUserFailure,
   // signOutUserStart,
   // signOutUserFailure,
   // signOutUserSuccess,
@@ -95,22 +95,23 @@ export default function Profile() {
     }
   };
 
-  // const handleDeleteUser = async () => {
-  //   try {
-  //     dispatch(deleteUserStart());
-  //     const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-  //       method: "DELETE",
-  //     });
-  //     const data = await res.json();
-  //     if (data.success === false) {
-  //       dispatch(deleteUserFailure(data.message));
-  //       return;
-  //     }
-  //     dispatch(deleteUserSuccess(data));
-  //   } catch (error) {
-  //     dispatch(deleteUserFailure(error.message));
-  //   }
-  // };
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
+  };
+
   // const handleSignOut = async () => {
   //   try {
   //     dispatch(signOutUserStart());
@@ -224,17 +225,17 @@ export default function Profile() {
         </Link>
       </form>
       <div className="flex justify-between mt-5">
-        {/* <span
+        <span
           onClick={handleDeleteUser}
           className="text-red-700 cursor-pointer"
         >
           {" "}
           Delete Account
-        </span> */}
-        {/* <span onClick={handleSignOut} className="text-red-700 cursor-pointer">
-          {" "}
+        </span> 
+         {/* <span onClick={handleSignOut} className="text-red-700 cursor-pointer"> */}
+          {/* {" "} */}
           Sign Out
-        </span> */}
+        {/* </span> */}
       </div>
 
       <p className="text-red-700 mt-5">{error ? error : ""}</p>
@@ -247,7 +248,7 @@ export default function Profile() {
       >
         Show Listings
       </button> */}
-      <p className="text-red-700 mt-5">
+      {/* <p className="text-red-700 mt-5">
         {showListingError ? "erro showing listings" : ""}
       </p>
       {userListings && userListings.length > 0 && (
@@ -285,7 +286,8 @@ export default function Profile() {
             </div>
           ))}
         </div>
-      )}
+      )} */}
+
     </div>
   );
 }
