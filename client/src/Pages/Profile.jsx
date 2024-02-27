@@ -9,12 +9,12 @@ import { useRef, useState, useEffect } from "react";
 import { app } from "../firebase";
 import { Link } from "react-router-dom";
 import {
-  updateUserStart,
-  updateUserSuccess,
-  updateUserFailure,
-  deleteUserFailure,
-  deleteUserStart,
-  deleteUserSuccess,
+ updateUserStart,
+ updateUserSuccess,
+ updateUserFailure,
+  // deleteUserStart,
+  // deleteUserSuccess,
+  // deleteUserFailure,
   // signOutUserStart,
   // signOutUserFailure,
   // signOutUserSuccess,
@@ -28,8 +28,10 @@ export default function Profile() {
   const [showListingError, setShowListingError] = useState(false);
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({}); 
   const [updateSuccess, setUpdateSuccess] = useState(false);
+
+
   const dispatch = useDispatch();
 
   //firebase storage
@@ -69,15 +71,14 @@ export default function Profile() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
       const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
@@ -86,6 +87,7 @@ export default function Profile() {
         dispatch(updateUserFailure(data.message));
         return;
       }
+
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
     } catch (error) {
@@ -93,70 +95,70 @@ export default function Profile() {
     }
   };
 
-  const handleDeleteUser = async () => {
-    try {
-      dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-        method: "DELETE",
-      });
-      const data = await res.json();
-      if (data.success === false) {
-        dispatch(deleteUserFailure(data.message));
-        return;
-      }
-      dispatch(deleteUserSuccess(data));
-    } catch (error) {
-      dispatch(deleteUserFailure(error.message));
-    }
-  };
-  const handleSignOut = async () => {
-    try {
-      dispatch(signOutUserStart());
-      const res = await fetch("/api/auth/signout");
-      const data = await res.json();
-      if (data.success === false) {
-        dispatch(signOutUserFailure(data.message));
-        return;
-      }
-      dispatch(signOutUserSuccess(data));
-    } catch (error) {
-      dispatch(signOutUserFailure(data.message));
-    }
-  };
-  const handleSubmitListing = async () => {
-    try {
-      setShowListingError(false);
-      const res = await fetch(`/api/user/listings/${currentUser._id}`);
-      const data = await res.json();
-      if (data.success === false) {
-        setShowListingError(true);
-        return;
-      }
+  // const handleDeleteUser = async () => {
+  //   try {
+  //     dispatch(deleteUserStart());
+  //     const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+  //       method: "DELETE",
+  //     });
+  //     const data = await res.json();
+  //     if (data.success === false) {
+  //       dispatch(deleteUserFailure(data.message));
+  //       return;
+  //     }
+  //     dispatch(deleteUserSuccess(data));
+  //   } catch (error) {
+  //     dispatch(deleteUserFailure(error.message));
+  //   }
+  // };
+  // const handleSignOut = async () => {
+  //   try {
+  //     dispatch(signOutUserStart());
+  //     const res = await fetch("/api/auth/signout");
+  //     const data = await res.json();
+  //     if (data.success === false) {
+  //       dispatch(signOutUserFailure(data.message));
+  //       return;
+  //     }
+  //     dispatch(signOutUserSuccess(data));
+  //   } catch (error) {
+  //     dispatch(signOutUserFailure(data.message));
+  //   }
+  // };
+  // const handleSubmitListing = async () => {
+  //   try {
+  //     setShowListingError(false);
+  //     const res = await fetch(`/api/user/listings/${currentUser._id}`);
+  //     const data = await res.json();
+  //     if (data.success === false) {
+  //       setShowListingError(true);
+  //       return;
+  //     }
 
-      setUserListings(data);
-    } catch (error) {
-      setShowListingError(true);
-    }
-  };
+  //     setUserListings(data);
+  //   } catch (error) {
+  //     setShowListingError(true);
+  //   }
+  // };
 
-  const handleListingDelete = async (listingId) => {
-    try {
-      const res = await fetch(`/api/listing/delete/${listingId}`, {
-        method: "DELETE",
-      });
-      const data = await res.json();
-      if (data.success === false) {
-        console.log(data.message);
-        return;
-      }
+  // const handleListingDelete = async (listingId ) => {
+  //   try {
+  //     const res = await fetch(`/api/listing/delete/${listingId}`, {
+  //       method: "DELETE",
+  //     });
+  //     const data = await res.json();
+  //     if (data.success === false) {
+  //       console.log(data.message);
+  //       return;
+  //     }
 
-      setUserListings((prev) =>
-        prev.filter((listing) => listing._id !== listingId)
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     setUserListings((prev) =>
+  //       prev.filter((listing) => listing._id !== listingId)
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
@@ -214,7 +216,7 @@ export default function Profile() {
         >
           {loading ? 'Loading...' : "Update"}
         </button>
-        <Link
+    <Link
           className="bg-green-700 p-3 text-white uppercase text-center hover:opacity-95 rounded-lg"
           to={"/create-listing"}
         >
@@ -222,29 +224,29 @@ export default function Profile() {
         </Link>
       </form>
       <div className="flex justify-between mt-5">
-        <span
+        {/* <span
           onClick={handleDeleteUser}
           className="text-red-700 cursor-pointer"
         >
           {" "}
           Delete Account
-        </span>
-        <span onClick={handleSignOut} className="text-red-700 cursor-pointer">
+        </span> */}
+        {/* <span onClick={handleSignOut} className="text-red-700 cursor-pointer">
           {" "}
           Sign Out
-        </span>
+        </span> */}
       </div>
 
       <p className="text-red-700 mt-5">{error ? error : ""}</p>
       <p className="text-green-700 mt-5">
         {updateSuccess ? "User is updated successfully!" : ""}
       </p>
-      <button
+      {/* <button
         onClick={handleSubmitListing}
         className="text-green-700 hover:underline w-full"
       >
         Show Listings
-      </button>
+      </button> */}
       <p className="text-red-700 mt-5">
         {showListingError ? "erro showing listings" : ""}
       </p>
