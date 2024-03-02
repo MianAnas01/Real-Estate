@@ -181,6 +181,7 @@ const handleSignOut = async () => {
           alt='profile'
           className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2'
         />
+
         <p className="text-sm self-center">
           {fileUploadError ? (
             <span className="text-red-700">
@@ -237,7 +238,7 @@ const handleSignOut = async () => {
           Delete Account
         </span> 
          <span onClick={handleSignOut} className="text-red-700 cursor-pointer"> 
-           {/* {" "} */}
+           {" "}
           Sign Out
          </span> 
       </div>
