@@ -76,3 +76,12 @@ export const google = async (req, res, next) => {
      next(error);
    }
  };
+
+ export const signOut = (req, res, next) => {
+try {
+  res.clearCookie('access_token');
+  res.status(200).json('user has been logged out already');
+} catch (error) {
+  next(error);
+}
+ };

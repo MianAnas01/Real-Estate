@@ -1,4 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+
 import {
   getStorage,
   ref,
@@ -15,17 +17,17 @@ import {
  deleteUserStart,
  deleteUserSuccess,
  deleteUserFailure,
-  // signOutUserStart,
-  // signOutUserFailure,
-  // signOutUserSuccess,
+ signOutUserStart,
+ signOutUserFailure,
+ signOutUserSuccess,
 } from "../redux//user/userSlice";
 
 export default function Profile() {
   const fileRef = useRef(null);
   const { currentUser, loading, error } = useSelector((state) => state.user);
   const [file, setFile] = useState(undefined);
-  const [userListings, setUserListings] = useState([]);
-  const [showListingError, setShowListingError] = useState(false);
+  // const [userListings, setUserListings] = useState([]);
+  // const [showListingError, setShowListingError] = useState(false);
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({}); 
@@ -96,6 +98,7 @@ export default function Profile() {
   };
 
   const handleDeleteUser = async () => {
+    // window.location.href = '/sign-in';
     try {
       dispatch(deleteUserStart());
       const res = await fetch(`/api/user/delete/${currentUser._id}`, {
@@ -112,20 +115,21 @@ export default function Profile() {
     }
   };
 
-  // const handleSignOut = async () => {
-  //   try {
-  //     dispatch(signOutUserStart());
-  //     const res = await fetch("/api/auth/signout");
-  //     const data = await res.json();
-  //     if (data.success === false) {
-  //       dispatch(signOutUserFailure(data.message));
-  //       return;
-  //     }
-  //     dispatch(signOutUserSuccess(data));
-  //   } catch (error) {
-  //     dispatch(signOutUserFailure(data.message));
-  //   }
-  // };
+const handleSignOut = async () => {
+    try {
+      dispatch(signOutUserStart());
+      const res = await fetch('/api/auth/signout');
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(data.message));
+    }
+  };
+  
   // const handleSubmitListing = async () => {
   //   try {
   //     setShowListingError(false);
@@ -171,11 +175,11 @@ export default function Profile() {
           hidden
           accept="image/*"
         />
-        <img
+       <img
           onClick={() => fileRef.current.click()}
-          className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2 "
           src={formData.avatar || currentUser.avatar}
-          alt="profile"
+          alt='profile'
+          className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2'
         />
         <p className="text-sm self-center">
           {fileUploadError ? (
@@ -232,10 +236,10 @@ export default function Profile() {
           {" "}
           Delete Account
         </span> 
-         {/* <span onClick={handleSignOut} className="text-red-700 cursor-pointer"> */}
-          {/* {" "} */}
+         <span onClick={handleSignOut} className="text-red-700 cursor-pointer"> 
+           {/* {" "} */}
           Sign Out
-        {/* </span> */}
+         </span> 
       </div>
 
       <p className="text-red-700 mt-5">{error ? error : ""}</p>
