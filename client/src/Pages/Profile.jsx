@@ -18,8 +18,7 @@ import {
  deleteUserSuccess,
  deleteUserFailure,
  signOutUserStart,
- signOutUserFailure,
- signOutUserSuccess,
+
 } from "../redux//user/userSlice";
 
 export default function Profile() {
