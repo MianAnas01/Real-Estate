@@ -25,8 +25,8 @@ export default function Profile() {
   const fileRef = useRef(null);
   const { currentUser, loading, error } = useSelector((state) => state.user);
   const [file, setFile] = useState(undefined);
-  // const [userListings, setUserListings] = useState([]);
-  // const [showListingError, setShowListingError] = useState(false);
+  const [userListings, setUserListings] = useState([]);
+  const [showListingError, setShowListingError] = useState(false);
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({}); 
@@ -129,21 +129,21 @@ const handleSignOut = async () => {
     }
   };
   
-  // const handleSubmitListing = async () => {
-  //   try {
-  //     setShowListingError(false);
-  //     const res = await fetch(`/api/user/listings/${currentUser._id}`);
-  //     const data = await res.json();
-  //     if (data.success === false) {
-  //       setShowListingError(true);
-  //       return;
-  //     }
+  const handleSubmitListing = async () => {
+    try {
+      setShowListingError(false);
+      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const data = await res.json();
+      if (data.success === false) {
+        setShowListingError(true);
+        return;
+      }
 
-  //     setUserListings(data);
-  //   } catch (error) {
-  //     setShowListingError(true);
-  //   }
-  // };
+      setUserListings(data);
+    } catch (error) {
+      setShowListingError(true);
+    }
+  };
 
   // const handleListingDelete = async (listingId ) => {
   //   try {
@@ -246,13 +246,14 @@ const handleSignOut = async () => {
       <p className="text-green-700 mt-5">
         {updateSuccess ? "User is updated successfully!" : ""}
       </p>
-      {/* <button
+
+     <button
         onClick={handleSubmitListing}
         className="text-green-700 hover:underline w-full"
       >
         Show Listings
-      </button> */}
-      {/* <p className="text-red-700 mt-5">
+      </button> 
+      <p className="text-red-700 mt-5">
         {showListingError ? "erro showing listings" : ""}
       </p>
       {userListings && userListings.length > 0 && (
@@ -290,7 +291,7 @@ const handleSignOut = async () => {
             </div>
           ))}
         </div>
-      )} */}
+      )} 
 
     </div>
   );
