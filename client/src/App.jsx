@@ -6,7 +6,7 @@ import SignUp from './Pages/SignUp';
 import About from './Pages/About';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
-import CreateListing from './Pages/createListing';
+import CreateListing from './Pages/CreateListing.jsx';
 import UpdateListing from './Pages/UpdateListing.jsx';
 import Listing from './Pages/Listing.jsx';
 import Search from './Pages/Search.jsx';

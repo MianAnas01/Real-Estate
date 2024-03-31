@@ -4,7 +4,7 @@ import { useState } from 'react';
 import OAuth from '../components/OAuth';
 
 function SignUp() {
-  const [formData, setFormData] =useState({});
+const [formData, setFormData] =useState({});
 const [error, setError] = useState('null');
 const [loading, setLoading] = useState(false);
 const navigate = useNavigate();
