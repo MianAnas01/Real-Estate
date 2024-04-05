@@ -61,10 +61,10 @@ const {currentUser} = useSelector((state) => state.user)
             {listing.imageUrls.map((url) => (
               <SwiperSlide key={url}>
                 <div
-                  className='h-[550px]'
+                  className='h-[300px]'
                   style={{
                     background: `url(${url}) center no-repeat`,
-                    backgroundSize: 'cover',
+                    backgroundSize: '100% 100%',
                   }}
                 ></div>
               </SwiperSlide>
